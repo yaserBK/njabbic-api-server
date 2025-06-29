@@ -1,0 +1,8 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveWhenNoErrors": true,
+    "editor.formatOnSave": true,
+    "window.zoomPerWindow": false,
+    "editor.mouseWheelZoom": true
+}
