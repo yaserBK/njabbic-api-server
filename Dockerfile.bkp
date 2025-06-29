@@ -1,0 +1,29 @@
+# ---- Stage 1: Build the application ----
+FROM eclipse-temurin:21-jdk-alpine AS builder
+
+# Install curl and unzip for Gradle wrapper if needed
+RUN apk add --no-cache bash curl unzip
+
+WORKDIR /app
+
+# Copy only Gradle wrapper files first (for layer caching)
+COPY gradlew gradlew.bat build.gradle settings.gradle ./
+COPY gradle gradle
+
+# Pre-download dependencies (improves layer caching)
+RUN ./gradlew --no-daemon dependencies
+
+# Copy the rest of the project
+COPY . .
+
+# Build the application
+RUN ./gradlew bootJar --no-daemon
+
+# ---- Stage 2: Create minimal runtime image ----
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/build/libs/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

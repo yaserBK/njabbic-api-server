@@ -4,5 +4,6 @@
     "files.autoSaveWhenNoErrors": true,
     "editor.formatOnSave": true,
     "window.zoomPerWindow": false,
-    "editor.mouseWheelZoom": true
+    "editor.mouseWheelZoom": true,
+    "java.compile.nullAnalysis.mode": "automatic"
 }
